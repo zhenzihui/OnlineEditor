@@ -22,11 +22,30 @@ public class ArticleServiceImpl implements ArticleService {
 
     @Override
     public List<Article> get() {
-        return null;
+        return articleDao.all();
     }
 
     @Override
     public List<Article> getArticleByUserId(int userId) {
-        return null;
+
+        return articleDao.all();
+
     }
+
+    @Override
+    public void add(Article article) {
+         articleDao.add(article);
+    }
+
+    @Override
+    public void delete(int id) {
+        articleDao.delete(id);
+    }
+
+    @Override
+    public void update(Article article) {
+        articleDao.update(article);
+    }
+
+
 }

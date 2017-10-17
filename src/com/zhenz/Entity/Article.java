@@ -1,6 +1,12 @@
 package com.zhenz.Entity;
 
+
 import java.io.Serializable;
+
+import java.security.spec.ECField;
+import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
@@ -10,8 +16,8 @@ public class Article implements Serializable {
     private int id;
     private String title;
     private String body;
-    private Date created_at;
-    private Date updated_at;
+    private Timestamp created_at;
+    private Timestamp updated_at;
     private int user_id;
     private int wordCount;
 
@@ -39,19 +45,19 @@ public class Article implements Serializable {
         this.body = body;
     }
 
-    public Date getCreated_at() {
+    public Timestamp getCreated_at() {
         return created_at;
     }
 
-    public void setCreated_at(Date created_at) {
+    public void setCreated_at(Timestamp created_at) {
         this.created_at = created_at;
     }
 
-    public Date getUpdated_at() {
+    public Timestamp getUpdated_at() {
         return updated_at;
     }
 
-    public void setUpdated_at(Date updated_at) {
+    public void setUpdated_at(Timestamp updated_at) {
         this.updated_at = updated_at;
     }
 
@@ -70,4 +76,39 @@ public class Article implements Serializable {
     public void setWordCount(int wordCount) {
         this.wordCount = wordCount;
     }
+
+    private Date toDate(Timestamp timestamp)
+    {
+        Date mDate=null;
+        String tsStr="";
+        DateFormat df=new SimpleDateFormat("yyyy-mm-dd HH:mm:ss");
+        tsStr=df.format(timestamp);
+        try{
+        mDate=df.parse(tsStr);
+        }catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+        return mDate;
+    }
+
+    private Timestamp toTimestamp(Date date)
+    {
+        String dateString;
+        Timestamp timestamp;
+        DateFormat dateFormat= new SimpleDateFormat("yyyy-mm-dd HH:mm:ss");
+        try{
+            dateString=dateFormat.format(date);
+            timestamp=Timestamp.valueOf(dateString);
+            return timestamp;
+        }catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+    return null;
+
+    }
+
 }
+
+

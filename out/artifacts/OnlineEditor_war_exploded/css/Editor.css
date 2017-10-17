@@ -1,0 +1,11 @@
+.editor{
+    height: 100%;
+    background-color: whitesmoke;
+    color: #1d2124;
+}
+
+.predictor
+{
+    height: 100%;
+    overflow-y: auto;
+}

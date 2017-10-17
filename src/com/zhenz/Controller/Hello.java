@@ -21,13 +21,7 @@ public class Hello implements Controller {
     ArticleService articleService;
     @Override
     public ModelAndView handleRequest(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws Exception {
-
-
-
-        Article article = articleService.get(1);
-
-        ModelAndView mv = new ModelAndView("hello");
-        mv.addObject("article",article);
+        ModelAndView mv = new ModelAndView("editor");
         return mv;
     }
 }
