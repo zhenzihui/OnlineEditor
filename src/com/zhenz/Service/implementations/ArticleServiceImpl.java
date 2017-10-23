@@ -5,6 +5,7 @@ import com.zhenz.Entity.Article;
 import com.zhenz.Service.ArticleService;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 /**
@@ -14,6 +15,7 @@ public class ArticleServiceImpl implements ArticleService {
 
     @Autowired
     private ArticleDao articleDao;
+
 
     @Override
     public Article get(int id) {

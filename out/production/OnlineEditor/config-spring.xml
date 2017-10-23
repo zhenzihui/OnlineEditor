@@ -19,8 +19,10 @@
     <!-- 处理器适配器 所有处理器适配器都实现 HandlerAdapter接口 -->
     <bean class="org.springframework.web.servlet.mvc.SimpleControllerHandlerAdapter" />
 
-
     <bean id="hello" class="com.zhenz.Controller.Hello"/>
+    <bean class="com.zhenz.Controller.Authenticate"/>
+
+
     <!--简单url映射  -->
     <bean class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
         <property name="mappings">
@@ -39,5 +41,15 @@
     </bean>
 
 
+    <!--拦截器-->
+
+    <mvc:interceptors>
+
+        <!--api请求拦截器-->
+        <mvc:interceptor>
+            <mvc:mapping path="/api/*"/>
+            <bean class="com.zhenz.Interceptor.AuthInterceptor"/>
+        </mvc:interceptor>
+    </mvc:interceptors>
 
 </beans>

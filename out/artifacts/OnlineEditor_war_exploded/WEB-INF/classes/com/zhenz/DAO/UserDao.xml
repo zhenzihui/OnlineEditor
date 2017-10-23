@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhenz.DAO.UserDao">
+    <select id="login" parameterType="User" resultType="User">
+        SELECT * from users WHERE email='${email}' and password='${password}'
+    </select>
+
+    <select id="articles" parameterType="User" resultType="Article">
+        SELECT * from articles where user_id=${id}
+    </select>
+
+    <insert id="register" parameterType="User">
+    <selectKey keyProperty="id" order="AFTER" resultType="int">
+        SELECT last_insert_id();
+    </selectKey>
+
+        insert into users (email, password) values ('${email}','${password}');
+    </insert>
+</mapper>
