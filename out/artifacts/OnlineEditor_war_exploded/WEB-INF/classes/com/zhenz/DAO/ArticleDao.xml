@@ -4,22 +4,23 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.zhenz.DAO.ArticleDao">
     <select id="get" parameterType="int" resultType="Article">
-        SELECT * from articles where id=${value}
+        SELECT * from articles where id=#{value}
     </select>
     <select id="all" resultType="Article">
         SELECT * from articles
     </select>
+
     <select id="getArticleByUserId" parameterType="int" resultType="Article">
-        SELECT * from articles where user_id=${id}
+        SELECT * from articles where user_id=#{id}
     </select>
     <insert id="add" parameterType="Article">
-        INSERT into articles(title, body, user_id, word_count) VALUES (${title},${body},${user_id},${word_count})
+        INSERT into articles(title, body, user_id, word_count) VALUES (#{title},#{body},#{user_id},#{wordCount})
     </insert>
     <delete id="delete" parameterType="int">
-        DELETE from articles WHERE id=${id}
+        DELETE from articles WHERE id=#{id}
     </delete>
     <update id="update" parameterType="Article">
-        UPDATE articles set title=${title},body=${body},updated_at=now(),word_count=${word_count} WHERE id=${id}
+        UPDATE articles set title=#{title},body=#{body},updated_at=now(),word_count=#{wordCount} WHERE id=#{id}
     </update>
 
 

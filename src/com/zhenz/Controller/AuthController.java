@@ -44,6 +44,7 @@ public class AuthController {
         if(loginUser!=null)
         {
             session.setAttribute("user",loginUser);
+            session.setAttribute("authcode",null);
         }else
             {
                 session.setAttribute("authcode",error_login);
@@ -62,36 +63,36 @@ public class AuthController {
     @RequestMapping(value = "/register.do",method = RequestMethod.POST)
     public String register(@RequestParam String email,@RequestParam String password,@RequestParam String confirm,HttpServletResponse response,HttpSession session)
     {
-        try {
-            PrintWriter out = response.getWriter();
 
-        if(password.equals(confirm))
+
+            if(password.equals(confirm))
         {
             User user = new User();
             user.setEmail(email);
             user.setPassword(password);
-            try {
+
                 int res=userService.register(user);
                 if(res!=-1)
                 {
                     user=userService.login(user);
                     session.setAttribute("user",user);
+                    session.setAttribute("authcode",null);
                     return "redirect:/";
                 }
-            }catch (Exception e)
-            {
+
+
                 session.setAttribute("authcode",error_register);
-            }
+
 
 
         }
             session.setAttribute("authcode",error_register);
 
-        } catch (Exception e) {
+
 
             session.setAttribute("authcode",error_register);
-            e.printStackTrace();
-    }
+
+
     return "redirect:/auth/register.do";
 
     }

@@ -12,8 +12,8 @@ String authcode=(String)session.getAttribute("authcode");
     <title>在线编辑器</title>
 
     <SCRIPT>
-       let authode='<%=authcode%>';
-       let msg;
+       var authode='<%=authcode%>';
+       var msg;
        switch(authode)
        {
            case "error_login":
@@ -35,18 +35,19 @@ String authcode=(String)session.getAttribute("authcode");
 
     <script src="../../js/jquery.js"></script>
     <script src="https://cdn.bootcss.com/showdown/1.7.6/showdown.min.js"></script>
-    <link href="../../css/bootstrap.css" rel="stylesheet"></head>
-<link href="../../css/Editor.css" rel="stylesheet"></head>
+    <link href="../../css/bootstrap.css" rel="stylesheet">
+<link href="../../css/Editor.css" rel="stylesheet">
 
 </head>
-<body style="background: url('https://i.loli.net/2017/08/15/59926e94e27df.jpg') no-repeat fixed bottom center;background-size: cover;">
+<body>
 
 <div class="container">
 
-    <div class="row" style="height: 10%">
+    <div id="editorCompoLabel" class="row" style="height: 10%">
         <div class="col-md-2"></div>
         <div class="col-md-5">
             <h3>编辑器：</h3>
+
         </div>
         <div class="col-md-5">
             <h3>预览：</h3>
@@ -63,55 +64,104 @@ String authcode=(String)session.getAttribute("authcode");
                <a href="#" class="list-group-item active">当前用户：<%=user.getEmail()%></a>
 
                <a href="/auth/logout.do" class="list-group-item">安全退出</a>
-               <a href="#" class="list-group-item">所有文章</a>
-               <a href="#" class="list-group-item">新建</a>
-               <a href="#" class="list-group-item">保存</a>
 
+               <a id="newBtn" href="#" class="list-group-item">新建</a>
+               <button id="saveBtn" class="list-group-item form-control ">保存</button>
+               <a href="/article/my.do" class="list-group-item">所有文章</a>
 
 
 
             <%}else{%>
             <a href="/auth/register.do" class="list-group-item">注册</a>
-            <a id="loginbtn" href="#" class="list-group-item">登录</a>
+            <a href="#" id="loginbtn"  class="list-group-item">登录</a>
             <%}%>
 
-
-
-            <div class="row">
-
-            </div>
-            <div class="row">
-
-            </div>
         </div>
+
         <div class="col-md-5">
 
-            <textarea id="editor" class="form-control editor" onkeyup="onContentChange()" >
 
-            </textarea>
-        </div>
-        <div class="col-md-5">
 
-            <div id="predictor" class="predictor form-control">
-
+        <form id="editorForm">
+            <div class="form-group">
+            <label for="title" >标题:</label>
+            <input id="title" class="form-control" name="title">
             </div>
+            <div class="form-group">
+
+                <textarea id="editor" class="form-control editor" onkeyup="onContentChange()" ></textarea>
+            </div>
+        </form>
         </div>
+
+        <div class="col-md-5">
+            <div class="form-group">
+                <div id="predictor" class="predictor form-control">
+
+                </div>
+            </div>
+
+        </div>
+
     </div>
 </div>
 
 </body>
 <script>
-    let predictor=$("#predictor");
-    let editor=$("#editor");
-    let converter=new showdown.Converter();
-    let loginbtn=$("#loginbtn");
-$(document).ready(()=> {
+    var predictor=$("#predictor");
+    var editor=$("#editor");
+    var converter=new showdown.Converter();
+    var loginbtn=$("#loginbtn");
+    var saveBtn=$("#saveBtn");
+    var title=$("#title");
+    var newBtn=$("#newBtn");
+    var editorLabel=$("#editorCompoLabel");
+    var editorForm=$("#editorForm");
+$(document).ready(function() {
 
+    
+    
 
     onContentChange();
 
-    let showed=0;
-    loginbtn.click(()=>
+    var showed=0;
+
+    newBtn.click(function () {
+        var speed="normal";
+        editorLabel.toggle(speed);
+        editorForm.toggle(speed);
+        predictor.toggle(speed);
+    });
+
+    saveBtn.click(function () {
+
+
+        var titleval=title.val();
+        var bodyval=editor.val();
+
+        if($.trim(titleval)!=""&&$.trim(bodyval)!="")
+        {
+            $.post("/article/add.do",{title:title.val(),body:editor.val()},function (data,status) {
+                if(status=="success")
+                {
+                    alert("保存成功!");
+                    title.val(null);
+                    editor.val(null);
+                    predictor.html(null);
+                }
+                else
+                {
+                    alert("保存失败!\n请完整填写字段");
+                }
+            });
+        }else
+            {
+                alert("保存失败");
+            }
+
+    });
+
+    loginbtn.click(function()
     {
         if(showed===0) {
             loginbtn.after(showLoginForm());
@@ -124,7 +174,7 @@ $(document).ready(()=> {
     });
 
 
-    predictor.scroll(()=>{
+    predictor.scroll(function(){
         editor.scrollTop($(this).scrollTop());
         console.log("editor:"+editor.scrollTop()+";preview:"+predictor.scrollTop());
     });
@@ -135,13 +185,16 @@ $(document).ready(()=> {
 });
 function onContentChange()
 {
-    let html=converter.makeHtml(editor.val());
+    var html=converter.makeHtml(editor.val());
     predictor.html(html);
 
 }
 
+
+
+
 function showLoginForm() {
-    let form="<div id='loginform' class='list-group-item'>" +
+    var form="<div id='loginform' class='list-group-item'>" +
         "<form action='/auth/login.do' method='post'>" +
         "<div class='form-group'>" +
         "<label for='email'>邮箱：</label>" +

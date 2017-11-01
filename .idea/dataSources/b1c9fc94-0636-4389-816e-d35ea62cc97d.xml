@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <dataSource name="onlineeditor@localhost">
-  <database-model serializer="dbm" rdbms="MYSQL" format-version="4.1">
+  <database-model serializer="dbm" rdbms="MYSQL" format-version="4.4">
     <root id="1"/>
     <schema id="2" parent="1" name="onlineeditor">
       <Current>1</Current>
@@ -22,12 +22,10 @@
     <column id="11" parent="8" name="title">
       <Position>2</Position>
       <DataType>varchar(50)|0</DataType>
-      <NotNull>1</NotNull>
     </column>
     <column id="12" parent="8" name="body">
       <Position>3</Position>
       <DataType>text|0</DataType>
-      <NotNull>1</NotNull>
     </column>
     <column id="13" parent="8" name="created_at">
       <Position>4</Position>
@@ -64,17 +62,14 @@
     <column id="19" parent="9" name="email">
       <Position>2</Position>
       <DataType>varchar(50)|0</DataType>
-      <NotNull>1</NotNull>
     </column>
     <column id="20" parent="9" name="password">
       <Position>3</Position>
-      <DataType>varchar(8)|0</DataType>
-      <NotNull>1</NotNull>
+      <DataType>varchar(50)|0</DataType>
     </column>
     <column id="21" parent="9" name="type">
       <Position>4</Position>
       <DataType>enum(&apos;U&apos;, &apos;A&apos;)|0</DataType>
-      <DefaultExpression>&apos;U&apos;</DefaultExpression>
     </column>
     <column id="22" parent="9" name="article_count">
       <Position>5</Position>

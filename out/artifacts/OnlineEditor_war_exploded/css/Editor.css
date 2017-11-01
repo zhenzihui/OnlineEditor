@@ -9,3 +9,12 @@
     height: 100%;
     overflow-y: auto;
 }
+
+body{
+    background: url('https://i.loli.net/2017/08/15/59926e94e27df.jpg') no-repeat fixed bottom center;background-size: cover;
+}
+
+.header
+{
+    height: 150px;background-color: #6c757d;text-align: center;color: whitesmoke
+}

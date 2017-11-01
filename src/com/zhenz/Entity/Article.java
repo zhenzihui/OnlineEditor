@@ -109,6 +109,10 @@ public class Article implements Serializable {
 
     }
 
+    @Override
+    public String toString() {
+        return "id:"+getId()+";title:"+getTitle()+";body:"+getBody()+";wordcount:"+getWordCount();
+    }
 }
 
 
