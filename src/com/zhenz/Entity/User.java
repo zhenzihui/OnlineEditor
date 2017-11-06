@@ -50,4 +50,9 @@ public class User {
         this.article_count = article_count;
     }
 
+    public boolean owns(Article article)
+    {
+        return this.getId()==article.getUser_id();
+    }
+
 }

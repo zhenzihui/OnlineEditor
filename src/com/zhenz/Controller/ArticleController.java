@@ -1,10 +1,13 @@
 package com.zhenz.Controller;
 
 
+import com.google.gson.Gson;
 import com.sun.org.apache.xerces.internal.impl.xpath.regex.Match;
+import com.sun.xml.internal.ws.api.model.MEP;
 import com.zhenz.Entity.User;
 import com.zhenz.Service.ArticleService;
-import org.apache.ibatis.jdbc.SQL;
+
+import com.zhenz.utils.Message;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
@@ -14,8 +17,7 @@ import com.zhenz.Entity.Article;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.io.PrintWriter;
-import java.rmi.ServerException;
+
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -29,6 +31,8 @@ public class ArticleController {
     @Autowired
     ArticleService articleService;
 
+    Message message;
+    Gson gson=new Gson();
     @RequestMapping(value = "/{id}.do",method = RequestMethod.GET)
     public ModelAndView get(@PathVariable("id") int id)
     {
@@ -61,7 +65,6 @@ public class ArticleController {
             return mv;
         }else
             {
-
                 mv.setStatus(HttpStatus.FORBIDDEN);
                 return mv;
             }
@@ -97,11 +100,12 @@ public class ArticleController {
 
 
     @RequestMapping(value="/{id}/update.do",method = RequestMethod.GET)
-    public ModelAndView update(@PathVariable("id") int id)
+    public ModelAndView update(@PathVariable("id") int id,HttpSession session)
     {
         ModelAndView mv = new ModelAndView("article/ArticleUpdate");
         Article article=articleService.get(id);
         mv.addObject("article",article);
+        session.setAttribute("article",article);
         return mv;
     }
 
@@ -111,15 +115,28 @@ public class ArticleController {
      * */
     @RequestMapping(value = "/{id}.do",method = RequestMethod.POST)
     @ResponseBody
-    public String update(@RequestParam String title,@RequestParam String body,@PathVariable("id") int id)
+    public String update(@RequestParam String title,@RequestParam String body,@PathVariable("id") int id,HttpSession session)
     {
-        Article article=new Article();
+
+        User user=(User)session.getAttribute("user");
+        Article article=(Article) session.getAttribute("article");
         article.setTitle(title);
         article.setBody(body);
         article.setId(id);
         article.setWordCount(wordCount(article.getBody()));
-        articleService.update(article);
-        return "{status:ok}";
+        message=new Message();
+        if(user.owns(article))
+        {
+            articleService.update(article);
+
+           message.setStatus(Message.success);
+        }else
+            {
+               message.setStatus(Message.failure);
+            }
+
+        return gson.toJson(message);
+
     }
 
     @ResponseBody
@@ -127,7 +144,7 @@ public class ArticleController {
     public String delete(@PathVariable("id") int id)
     {
         articleService.delete(id);
-        return "{status:ok}";
+        return "{'status':'ok'}";
     }
 
 
@@ -146,5 +163,9 @@ public class ArticleController {
             n++;
         }
         return n;
+    }
+    private boolean owns(int user_id,int id)
+    {
+        return user_id==id;
     }
 }

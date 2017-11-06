@@ -17,6 +17,7 @@
           <element id="library" level="project" name="mysql-connector-java-5.1.41-bin" />
           <element id="library" level="project" name="jstl-1.2" />
           <element id="library" level="project" name="standard-1.1.2" />
+          <element id="library" level="project" name="gson-2.8.2" />
         </element>
       </element>
     </root>

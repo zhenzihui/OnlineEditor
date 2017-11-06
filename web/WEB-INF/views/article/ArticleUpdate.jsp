@@ -42,7 +42,7 @@
 
 
             <button id="saveBtn" class="list-group-item form-control ">保存</button>
-            <a href="#" class="list-group-item">所有文章</a>
+            <a href="/article/my.do" class="list-group-item">所有文章</a>
 
 
 
@@ -116,19 +116,22 @@
 
             if($.trim(titleval)!=""&&$.trim(bodyval)!="")
             {
-                $.post("/article/${article.id}.do",{title:title.val(),body:editor.val()},function (data,status) {
-                    if(status=="success")
+                $.post("/article/${article.id}.do",{title:title.val(),body:editor.val()},function (data) {
+                    data=eval(data);
+                    console.log(data.status);
+
+                    if(data.status=="ok")
                     {
                         alert("保存成功!");
-                        title.val(null);
-                        editor.val(null);
-                        predictor.html(null);
+                    }
+                    else if(data.status=="err") {
+                        alert("保存失败!");
                     }
                     else
                     {
                         alert("保存失败!\n请完整填写字段");
                     }
-                });
+                },'json');
             }else
             {
                 alert("保存失败");

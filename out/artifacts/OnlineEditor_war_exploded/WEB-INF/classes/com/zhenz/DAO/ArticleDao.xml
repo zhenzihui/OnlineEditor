@@ -23,6 +23,5 @@
         UPDATE articles set title=#{title},body=#{body},updated_at=now(),word_count=#{wordCount} WHERE id=#{id}
     </update>
 
-
     
 </mapper>

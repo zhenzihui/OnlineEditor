@@ -50,6 +50,11 @@
             <mvc:mapping path="/api/*"/>
             <bean class="com.zhenz.Interceptor.AuthInterceptor"/>
         </mvc:interceptor>
+
+        <mvc:interceptor>
+            <mvc:mapping path="/article/*/update.do"/>
+            <bean class="com.zhenz.Interceptor.AuthInterceptor"/>
+        </mvc:interceptor>
     </mvc:interceptors>
 
 </beans>

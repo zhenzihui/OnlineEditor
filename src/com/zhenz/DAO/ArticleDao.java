@@ -14,4 +14,5 @@ public interface ArticleDao {
     void add(Article article);
     void delete(int id);
     void update(Article article);
+
 }

@@ -19,6 +19,7 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         User user=(User)session.getAttribute("user");
+        session.setAttribute("intended",request.getRequestURI());
         return user!=null;
 
     }
