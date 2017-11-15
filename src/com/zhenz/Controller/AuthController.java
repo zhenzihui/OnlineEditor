@@ -61,7 +61,7 @@ public class AuthController {
     }
 
     @RequestMapping(value = "/register.do",method = RequestMethod.POST)
-    public String register(@RequestParam String email,@RequestParam String password,@RequestParam String confirm,HttpServletResponse response,HttpSession session)
+    public String register(@RequestParam String email,@RequestParam String password,@RequestParam String confirm,HttpSession session)
     {
 
 
@@ -70,7 +70,7 @@ public class AuthController {
             User user = new User();
             user.setEmail(email);
             user.setPassword(password);
-
+            user.setType("U");
                 int res=userService.register(user);
                 if(res!=-1)
                 {
@@ -103,8 +103,11 @@ public class AuthController {
 
         try {
             session.setAttribute("user",null);
+            session.setAttribute("intended",null);
             PrintWriter out =response.getWriter();
+
             out.print("<script>location.href='/'</script>");
+
         } catch (IOException e) {
             e.printStackTrace();
         }

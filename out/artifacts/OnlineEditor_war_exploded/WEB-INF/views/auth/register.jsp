@@ -34,8 +34,9 @@
     </SCRIPT>
     <script src="../../js/jquery.js"></script>
     <script src="https://cdn.bootcss.com/showdown/1.7.6/showdown.min.js"></script>
-    <link href="../../css/bootstrap.css" rel="stylesheet"></head>
-<link href="../../css/Editor.css" rel="stylesheet"></head>
+    <link href="../../css/bootstrap.css" rel="stylesheet">
+<link href="../../css/Editor.css" rel="stylesheet">
+</head>
 
 <title>注册</title>
 </head>

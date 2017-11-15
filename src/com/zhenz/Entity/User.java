@@ -7,7 +7,7 @@ public class User {
     int id;
     String email;
     String password;
-    char type;
+    String type;
     int article_count;
 
     public int getId() {
@@ -34,11 +34,11 @@ public class User {
         this.password = password;
     }
 
-    public char getType() {
+    public String getType() {
         return type;
     }
 
-    public void setType(char type) {
+    public void setType(String type) {
         this.type = type;
     }
 

@@ -2,11 +2,11 @@ package com.zhenz.Controller;
 
 
 import com.google.gson.Gson;
-import com.sun.org.apache.xerces.internal.impl.xpath.regex.Match;
-import com.sun.xml.internal.ws.api.model.MEP;
+import com.zhenz.Entity.Log;
 import com.zhenz.Entity.User;
 import com.zhenz.Service.ArticleService;
 
+import com.zhenz.Service.LogService;
 import com.zhenz.utils.Message;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -31,13 +31,21 @@ public class ArticleController {
     @Autowired
     ArticleService articleService;
 
+
+    @Autowired
+    LogService logService;
+
+    Log log;
     Message message;
     Gson gson=new Gson();
     @RequestMapping(value = "/{id}.do",method = RequestMethod.GET)
     public ModelAndView get(@PathVariable("id") int id)
     {
-
         Article article= articleService.get(id);
+        log=new Log();
+        log.setType(Log.Action_View);
+        logService.newLog(log);
+
         ModelAndView mv=new ModelAndView("article/ArticleView");
         mv.addObject(article);
         return mv;
@@ -45,16 +53,25 @@ public class ArticleController {
     }
 
     @RequestMapping(value = "/all.do",method = RequestMethod.GET)
-    public ModelAndView get()
+    public ModelAndView get(HttpSession session)
     {
+        User user=(User)session.getAttribute("user");
         List<Article> articles=articleService.get();
-        ModelAndView mv =new ModelAndView("article/ArticleList");
-        mv.addObject("articles",articles);
+        ModelAndView mv =new ModelAndView();
+        if(!user.getType().equals("A"))
+        {
+            mv.setViewName("error_pages/ACL_error");
+        }else {
+            mv.setViewName("article/ArticleList");
+            mv.addObject("articles",articles);
+        }
+
+
         return mv;
     }
 
     @RequestMapping(value = "/my.do",method = RequestMethod.GET)
-    public ModelAndView get(HttpSession session)
+    public ModelAndView getByUser(HttpSession session)
     {
         ModelAndView mv = new ModelAndView("article/ArticleList");
         User user=(User)session.getAttribute("user");
@@ -76,17 +93,21 @@ public class ArticleController {
     @ResponseBody
     public String add(@RequestParam String title, @RequestParam String body, HttpSession session, HttpServletResponse response)
     {
+        log=new Log();
         Article article =new Article();
       try {
           User user = (User) session.getAttribute("user");
           article.setUser_id(user.getId());
-
           article.setBody(body);
           article.setTitle(title);
-
           int wordcount= wordCount(article.getBody());
           article.setWordCount(wordcount);
-          articleService.add(article);
+          int id= articleService.add(article);
+          log.setArticle_id(id);
+          log.setUser_id(user.getId());
+          log.setType(Log.Action_Insert);
+          logService.newLog(log);
+
           return "{result:'ok'}";
       }catch (Exception e)
       {
@@ -102,10 +123,20 @@ public class ArticleController {
     @RequestMapping(value="/{id}/update.do",method = RequestMethod.GET)
     public ModelAndView update(@PathVariable("id") int id,HttpSession session)
     {
-        ModelAndView mv = new ModelAndView("article/ArticleUpdate");
-        Article article=articleService.get(id);
-        mv.addObject("article",article);
-        session.setAttribute("article",article);
+        ModelAndView mv;
+        User user=(User)session.getAttribute("user");
+        Article article = articleService.get(id);
+       mv= new ModelAndView();
+        if(user.getId()==article.getUser_id())
+        {
+            mv.setViewName("article/ArticleUpdate");
+            mv.addObject("article", article);
+            session.setAttribute("article", article);
+        }else
+            {
+             mv.setViewName("error_pages/ACL_error");
+            }
+
         return mv;
     }
 
@@ -127,24 +158,36 @@ public class ArticleController {
         message=new Message();
         if(user.owns(article))
         {
-            articleService.update(article);
 
+            articleService.update(article);
+            log=new Log();
+            log.setType(Log.Action_Update);
+            log.setArticle_id(article.getId());
+            log.setUser_id(user.getId());
+            logService.newLog(log);
            message.setStatus(Message.success);
         }else
             {
                message.setStatus(Message.failure);
             }
 
-        return gson.toJson(message);
+        return message.toString();
 
     }
 
     @ResponseBody
     @RequestMapping(value = "/{id}/delete.do",method = RequestMethod.POST)
-    public String delete(@PathVariable("id") int id)
+    public String delete(@PathVariable("id") int id,HttpSession session)
     {
+        User user=(User)session.getAttribute("user");
         articleService.delete(id);
-        return "{'status':'ok'}";
+        log=new Log();
+        log.setUser_id(user.getId());
+        log.setArticle_id(id);
+        log.setType(Log.Action_Delete);
+        logService.newLog(log);
+        message.setStatus(Message.success);
+        return message.toString();
     }
 
 
@@ -164,8 +207,5 @@ public class ArticleController {
         }
         return n;
     }
-    private boolean owns(int user_id,int id)
-    {
-        return user_id==id;
-    }
+
 }

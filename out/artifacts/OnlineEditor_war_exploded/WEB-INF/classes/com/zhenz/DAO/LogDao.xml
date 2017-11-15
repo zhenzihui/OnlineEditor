@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhenz.DAO.LogDao">
+    <select id="getLogsByUserId" parameterType="int" resultType="Log">
+    SELECT * from logs where user_id=#{id}
+    </select>
+
+    <insert id="newLog" parameterType="Log">
+      INSERT into logs(user_id,type,article_id) VALUES (#{user_id},#{type},#{article_id})
+    </insert>
+
+    <delete id="flush">
+        DELETE  from logs;
+    </delete>
+
+    <delete id="flushByUserId" parameterType="int">
+        DELETE from logs where user_id=#{id};
+    </delete>
+
+    <delete id="delete" parameterType="int">
+        DELETE from logs WHERE id=#{id}
+    </delete>
+</mapper>

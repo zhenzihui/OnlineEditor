@@ -12,5 +12,5 @@ public interface UserDao {
     User login(User user);
     List<Article> articles(User user);
     int register(User user);
-
+    List<User> all();
 }

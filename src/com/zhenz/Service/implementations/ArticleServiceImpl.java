@@ -3,6 +3,7 @@ package com.zhenz.Service.implementations;
 import com.zhenz.DAO.ArticleDao;
 import com.zhenz.Entity.Article;
 import com.zhenz.Service.ArticleService;
+import com.zhenz.Service.LogService;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.servlet.http.HttpSession;
@@ -15,6 +16,9 @@ public class ArticleServiceImpl implements ArticleService {
 
     @Autowired
     private ArticleDao articleDao;
+
+    @Autowired
+    private LogService logService;
 
 
     @Override
@@ -30,13 +34,15 @@ public class ArticleServiceImpl implements ArticleService {
     @Override
     public List<Article> getArticleByUserId(int userId) {
 
-        return articleDao.all();
+        return articleDao.getArticleByUserId(userId);
 
     }
 
     @Override
-    public void add(Article article) {
-         articleDao.add(article);
+    public int add(Article article) {
+
+
+       return articleDao.add(article);
     }
 
     @Override

@@ -12,74 +12,114 @@
     <schema id="6" parent="1" name="phpmyadmin"/>
     <schema id="7" parent="1" name="test"/>
     <table id="8" parent="2" name="articles"/>
-    <table id="9" parent="2" name="users"/>
-    <column id="10" parent="8" name="id">
+    <table id="9" parent="2" name="logs"/>
+    <table id="10" parent="2" name="users"/>
+    <column id="11" parent="8" name="id">
       <Position>1</Position>
       <DataType>int(11)|0</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>1</SequenceIdentity>
     </column>
-    <column id="11" parent="8" name="title">
+    <column id="12" parent="8" name="title">
       <Position>2</Position>
       <DataType>varchar(50)|0</DataType>
     </column>
-    <column id="12" parent="8" name="body">
+    <column id="13" parent="8" name="body">
       <Position>3</Position>
       <DataType>text|0</DataType>
     </column>
-    <column id="13" parent="8" name="created_at">
+    <column id="14" parent="8" name="created_at">
       <Position>4</Position>
       <DataType>timestamp|0</DataType>
       <NotNull>1</NotNull>
       <DefaultExpression>CURRENT_TIMESTAMP</DefaultExpression>
     </column>
-    <column id="14" parent="8" name="updated_at">
+    <column id="15" parent="8" name="updated_at">
       <Position>5</Position>
       <DataType>timestamp|0</DataType>
       <NotNull>1</NotNull>
       <DefaultExpression>CURRENT_TIMESTAMP</DefaultExpression>
     </column>
-    <column id="15" parent="8" name="user_id">
+    <column id="16" parent="8" name="user_id">
       <Position>6</Position>
       <DataType>int(11)|0</DataType>
     </column>
-    <column id="16" parent="8" name="word_count">
+    <column id="17" parent="8" name="word_count">
       <Position>7</Position>
       <DataType>int(11)|0</DataType>
       <DefaultExpression>&apos;0&apos;</DefaultExpression>
     </column>
-    <key id="17" parent="8" name="PRIMARY">
+    <key id="18" parent="8" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>id</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="18" parent="9" name="id">
+    <column id="19" parent="9" name="id">
+      <Position>1</Position>
+      <DataType>int(11)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="20" parent="9" name="user_id">
+      <Position>2</Position>
+      <DataType>int(11)|0</DataType>
+    </column>
+    <column id="21" parent="9" name="type">
+      <Position>3</Position>
+      <DataType>text|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="22" parent="9" name="article_id">
+      <Position>4</Position>
+      <DataType>int(11)|0</DataType>
+    </column>
+    <column id="23" parent="9" name="timestamp">
+      <Position>5</Position>
+      <DataType>timestamp|0</DataType>
+      <NotNull>1</NotNull>
+      <DefaultExpression>CURRENT_TIMESTAMP</DefaultExpression>
+    </column>
+    <key id="24" parent="9" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>id</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <column id="25" parent="10" name="id">
       <Position>1</Position>
       <DataType>int(11)|0</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>1</SequenceIdentity>
     </column>
-    <column id="19" parent="9" name="email">
+    <column id="26" parent="10" name="email">
       <Position>2</Position>
       <DataType>varchar(50)|0</DataType>
+      <NotNull>1</NotNull>
     </column>
-    <column id="20" parent="9" name="password">
+    <column id="27" parent="10" name="password">
       <Position>3</Position>
       <DataType>varchar(50)|0</DataType>
     </column>
-    <column id="21" parent="9" name="type">
+    <column id="28" parent="10" name="type">
       <Position>4</Position>
-      <DataType>enum(&apos;U&apos;, &apos;A&apos;)|0</DataType>
+      <DataType>text|0</DataType>
     </column>
-    <column id="22" parent="9" name="article_count">
+    <column id="29" parent="10" name="article_count">
       <Position>5</Position>
       <DataType>int(11)|0</DataType>
+      <NotNull>1</NotNull>
       <DefaultExpression>&apos;0&apos;</DefaultExpression>
     </column>
-    <key id="23" parent="9" name="PRIMARY">
+    <index id="30" parent="10" name="email">
+      <ColNames>email</ColNames>
+      <Unique>1</Unique>
+    </index>
+    <key id="31" parent="10" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>id</ColNames>
       <Primary>1</Primary>
+    </key>
+    <key id="32" parent="10" name="email">
+      <ColNames>email</ColNames>
+      <UnderlyingIndexName>email</UnderlyingIndexName>
     </key>
   </database-model>
 </dataSource>

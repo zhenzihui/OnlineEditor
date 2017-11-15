@@ -13,6 +13,7 @@ public interface UserService {
     void logout();
     List<Article> articles();
     int register(User user);
+    List<User> all();
 
 
 }

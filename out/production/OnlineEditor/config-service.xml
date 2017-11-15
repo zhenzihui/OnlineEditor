@@ -5,4 +5,6 @@
     <bean id="articleService" class="com.zhenz.Service.implementations.ArticleServiceImpl"/>
 
     <bean id="userService" class="com.zhenz.Service.implementations.UserServiceImpl"/>
+
+    <bean id="logService" class="com.zhenz.Service.implementations.LogServiceImpl"/>
 </beans>

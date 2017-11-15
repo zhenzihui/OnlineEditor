@@ -3,7 +3,6 @@
 <%
 User user =(User)session.getAttribute("user");
 String authcode=(String)session.getAttribute("authcode");
-
 %>
 
 <html>
@@ -61,17 +60,24 @@ String authcode=(String)session.getAttribute("authcode");
         <div class="col-md-2">
             <%if(user!=null){%>
 
+
                <a href="#" class="list-group-item active">当前用户：<%=user.getEmail()%></a>
 
                <a href="/auth/logout.do" class="list-group-item">安全退出</a>
 
                <a id="newBtn" href="#" class="list-group-item">新建</a>
-               <button id="saveBtn" class="list-group-item form-control ">保存</button>
-               <a href="/article/my.do" class="list-group-item">所有文章</a>
+               <a href="" id="saveBtn" class="list-group-item">保存</a>
+               <a href="/article/my.do" class="list-group-item">我的文章</a>
+                <%if(user.getType().equals("A")){%>
+            <a href="/article/all.do" class="list-group-item">管理所有文章</a>
+            <a href="/log/users.do" class="list-group-item">管理操作日志</a>
+
+            <%}%>
 
 
 
             <%}else{%>
+            <script>alert("未登录时撰写的文章将无法保存！")</script>
             <a href="/auth/register.do" class="list-group-item">注册</a>
             <a href="#" id="loginbtn"  class="list-group-item">登录</a>
             <%}%>
@@ -204,7 +210,6 @@ function showLoginForm() {
         "<label for='password'>密码：</label>" +
         "<input id='password' name='password' class='form-control' type='password'>" +
         "</div>" +
-
         "<div class='form-group'>" +
         "<input type='submit' class='form-control btn btn-primary' value='登录'>" +
         "</div>" +

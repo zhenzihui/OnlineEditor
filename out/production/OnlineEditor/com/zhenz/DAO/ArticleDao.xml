@@ -14,8 +14,12 @@
         SELECT * from articles where user_id=#{id}
     </select>
     <insert id="add" parameterType="Article">
+      <selectKey resultType="int" keyProperty="id" order="AFTER" >
+          SELECT last_insert_id();
+      </selectKey>
         INSERT into articles(title, body, user_id, word_count) VALUES (#{title},#{body},#{user_id},#{wordCount})
     </insert>
+
     <delete id="delete" parameterType="int">
         DELETE from articles WHERE id=#{id}
     </delete>

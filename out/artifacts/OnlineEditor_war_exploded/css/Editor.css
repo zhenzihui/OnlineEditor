@@ -11,7 +11,7 @@
 }
 
 body{
-    background: url('https://i.loli.net/2017/08/15/59926e94e27df.jpg') no-repeat fixed bottom center;background-size: cover;
+    background: url('./img/bg.png') no-repeat fixed bottom center;background-size: cover;
 }
 
 .header

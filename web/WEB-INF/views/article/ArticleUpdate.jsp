@@ -182,7 +182,6 @@
             "<label for='password'>密码：</label>" +
             "<input id='password' name='password' class='form-control' type='password'>" +
             "</div>" +
-
             "<div class='form-group'>" +
             "<input type='submit' class='form-control btn btn-primary' value='登录'>" +
             "</div>" +

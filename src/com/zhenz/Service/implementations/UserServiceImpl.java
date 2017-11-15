@@ -46,4 +46,9 @@ public class UserServiceImpl implements UserService {
     public int register(User user) {
       return   userDao.register(user);
     }
+
+    @Override
+    public List<User> all() {
+        return userDao.all();
+    }
 }

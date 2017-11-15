@@ -123,9 +123,6 @@
                     if(data.status=="ok")
                     {
                         alert("保存成功!");
-                        title.val(null);
-                        editor.val(null);
-                        predictor.html(null);
                     }
                     else if(data.status=="err") {
                         alert("保存失败!");
@@ -185,7 +182,6 @@
             "<label for='password'>密码：</label>" +
             "<input id='password' name='password' class='form-control' type='password'>" +
             "</div>" +
-
             "<div class='form-group'>" +
             "<input type='submit' class='form-control btn btn-primary' value='登录'>" +
             "</div>" +

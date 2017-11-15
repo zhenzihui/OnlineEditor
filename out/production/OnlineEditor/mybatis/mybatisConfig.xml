@@ -5,6 +5,12 @@
         "http://mybatis.org/dtd/mybatis-3-config.dtd">
 
 <configuration>
+
+    <!--<settings>-->
+        <!--&lt;!&ndash; 打印查询语句 &ndash;&gt;-->
+        <!--<setting name="logImpl" value="STDOUT_LOGGING" />-->
+    <!--</settings>-->
+
     <typeAliases>
         <package name="com.zhenz.Entity"/>
     </typeAliases>
