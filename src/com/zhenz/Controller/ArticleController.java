@@ -179,6 +179,7 @@ public class ArticleController {
     @RequestMapping(value = "/{id}/delete.do",method = RequestMethod.POST)
     public String delete(@PathVariable("id") int id,HttpSession session)
     {
+        message=new Message();
         User user=(User)session.getAttribute("user");
         articleService.delete(id);
         log=new Log();
