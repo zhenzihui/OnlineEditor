@@ -10,7 +10,7 @@
 <head>
     <title>错误</title>
 </head>
-<body>
+<body style="background: url('https://images2.alphacoders.com/792/thumb-1920-792612.jpg') no-repeat fixed bottom center;background-size: cover;">
 <div align="center" style="margin-top: 20%">
     你无权查看该网页，<button onclick="javascript:location.href='/article/my.do'">返回列表</button>
 </div>
