@@ -23,7 +23,7 @@
     <link href="../../css/Editor.css" rel="stylesheet">
     <link href="../../css/log.css" rel="stylesheet">
 </head>
-<body>
+<body style="background: url('https://images2.alphacoders.com/792/thumb-1920-792612.jpg') no-repeat fixed bottom center;background-size: cover;">
 <div class="container" >
     <div class="row">
         <div class="col-md-2"></div>

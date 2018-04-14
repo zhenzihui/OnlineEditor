@@ -40,7 +40,7 @@
 
 <title>注册</title>
 </head>
-<body style="background: url('https://i.loli.net/2017/08/15/59926e94e27df.jpg') no-repeat fixed bottom center;background-size: cover;">
+<body style="background: url('https://images2.alphacoders.com/792/thumb-1920-792612.jpg') no-repeat fixed bottom center;background-size: cover;">
 <div class="container">
     <div class="row">
 <div class="col-md-2"></div>
